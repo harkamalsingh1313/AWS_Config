@@ -1,43 +1,42 @@
-AWS Config
-we'll use AWS Config to detect compliant and non-compliant ec2 instances for below rule.
+AWS Config: Monitoring Compliance for EC2 Instances
+This project uses AWS Config to detect compliant and non-compliant EC2 instances based on the following rule:
 
-compliant ec2 instance has monitoring enabled
-non-compliant ec2 instance does not have monitoring enabled
+Compliant EC2 Instance: Monitoring is enabled.
+Non-Compliant EC2 Instance: Monitoring is not enabled.
 Step 1: Set Up AWS Config
-
 Log in to your AWS Management Console.
 
 Navigate to the AWS Config service.
 
-Click on "Get started" if you're using AWS Config for the first time.
+If you are using AWS Config for the first time, click on "Get started".
 
-Configure the delivery channel settings, which include specifying an Amazon S3 bucket where AWS Config will store configuration history.
+Configure the delivery channel settings, including specifying an Amazon S3 bucket where AWS Config will store configuration history.
 
-Choose the resource types you want AWS Config to monitor. In this case, select "Amazon EC2 Instances."
+Choose the resource types you want AWS Config to monitor. For this project, select "Amazon EC2 Instances".
+
 Step 2: Create a Custom Config Rule
-
 Navigate to the AWS Config console.
 
-In the left navigation pane, click on "Rules."
+In the left navigation pane, click on "Rules".
 
 Click on the "Add rule" button.
 
-Choose "Create a custom rule."
+Choose "Create a custom rule".
 
-Give your rule a name and description (e.g., "Monitoring for EC2 Instances").
+Provide a name and description for your rule (e.g., "Monitoring Compliance for EC2 Instances").
 
-For "Scope of changes," choose "Resources."
+Under "Scope of changes", select "Resources".
 
-Define the rule trigger. You can use AWS Lambda as the trigger source. If you haven't already created a Lambda function for this rule, create one that checks whether monitoring is enabled for an EC2 instance. The Lambda function will return whether the resource is compliant or not based on monitoring status.
+Define the rule trigger. Use AWS Lambda as the trigger source. If you haven't already, create a Lambda function that checks whether monitoring is enabled for an EC2 instance. The function will return the compliance status based on the monitoring configuration.
+
 Step 3: Define the Custom Rule in AWS Config
-
-Choose your Lambda function from the dropdown list as the evaluator for the rule.
+Select your Lambda function from the dropdown list as the evaluator for the rule.
 
 Specify the trigger type (e.g., "Configuration changes").
 
 Save the rule.
-Step 4: Monitor and Alert
 
-AWS Config will now continuously evaluate your EC2 instances against the rule you've created.
+Step 4: Monitor and Alert
+AWS Config will continuously evaluate your EC2 instances against the rule you've created.
 
 If any EC2 instance is found without monitoring enabled, the custom rule's Lambda function will mark it as non-compliant.
